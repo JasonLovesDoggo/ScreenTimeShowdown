@@ -29,7 +29,6 @@ module.exports.execute = function (req, res) {
             else {
                 res.json(group);
             }
-            res.json({ logs: logs })
         }).catch((err) => {
             console.log(err);
             res.status(500).json({ error: "Internal server error" });
