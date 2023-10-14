@@ -17,7 +17,8 @@ module.exports.execute = function (req, res) {
         },
         include: {
             transactions: true,
-            groups: true
+            groups: true,
+            insta: true
         }
     }).then(user => {
         delete user.password;
