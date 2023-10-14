@@ -18,7 +18,7 @@ model User {
   admin        Boolean       @default(false)
   registertime String
   groups       Group[]
-  Transaction  Transaction[]
+  transactions  Transaction[]
 }
 
 model Transaction {
