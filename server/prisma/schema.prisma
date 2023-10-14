@@ -1,0 +1,63 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./data.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// all date fields are stringified JS Date.now() formats
+
+model User {
+  id           String        @id
+  username     String        @unique
+  //email        String        @unique
+  password     String
+  money        Int           @default(0) // users can change this by topping up or paying out
+  admin        Boolean       @default(false)
+  registertime String
+  groups       Group[]
+  transactions Transaction[]
+  insta        Insta?
+}
+
+model Insta {
+  id         String @id
+  lastonline String //date of last online
+  user       User   @relation(fields: [userid], references: [id])
+  userid     String @unique
+}
+
+model Transaction {
+  id        String @id
+  amount    Int
+  status    String //this will be "authorizing" "waiting..." "pending approval" "completed" "failed" 
+  udfs      String @unique
+  paybiltid String @unique
+  user      User   @relation(fields: [userid], references: [id])
+  userid    String
+}
+
+model Group {
+  id        String     @id
+  name      String
+  users     User[]
+  surviving String // csv containing IDs of surviving users
+  startdate String // startdate of 0 means it has not started
+  enddate   String // when enddate is reached, the interval task should calculate new bets/pot + set a new end date with the given interval
+  interval  Int // number of days
+  bet       Int // amount of money, in dollars, each person bets
+  pot       Int // the current pot
+  logs      GroupLog[] // a lot of all group activities e.g. "new user joined" or "x logged into insta!" etc etc
+}
+
+model GroupLog {
+  id        String @unique
+  title     String
+  number    Int    @id @default(autoincrement())
+  timestamp String
+  content   String
+  groupid   String
+  group     Group  @relation(fields: [groupid], references: [id])
+}
