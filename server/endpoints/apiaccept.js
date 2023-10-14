@@ -8,7 +8,7 @@ module.exports.verify = function (req, res) {
 }
 
 module.exports.execute = async function (req, res) {
-    if (req.body.id, req.body.key) {
+    if (req.body.id) {
         try {
             const foundgroup = await prisma.group.findUnique({
                 where: {
@@ -17,9 +17,6 @@ module.exports.execute = async function (req, res) {
             });
             if (!foundgroup) {
                 res.sendStatus(404);
-            }
-            if (foundgroup.key !== req.body.key) {
-                res.sendStatus(403);
             }
             prisma.group.update({
                 where: {
@@ -31,7 +28,7 @@ module.exports.execute = async function (req, res) {
                     }
                 }
             })
-            res.json({message: "invitation accepted!"});
+            res.status(200).json({message: "invitation accepted!"});
         } catch (error) {
             console.log(error);
             res.status(500).json({ error: error });

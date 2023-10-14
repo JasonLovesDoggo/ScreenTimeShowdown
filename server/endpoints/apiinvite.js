@@ -12,6 +12,9 @@ module.exports.execute = async function (req, res) {
     const user = await prisma.user.findUnique({
         where: {
             id: req.user.id
+        },
+        include: {
+            groups: true
         }
     })
     console.log(JSON.stringify(req.user))
