@@ -17,7 +17,7 @@ module.exports.execute = function (req, res) {
             data: {
                 startdate: Date.now(),
                 enddate: Date.now() + interval,
-                pot: bet * users.length
+                //pot: bet * users.length
             }
         }).catch((err) => {
             console.log(err);
