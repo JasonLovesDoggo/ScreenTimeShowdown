@@ -32,11 +32,7 @@ module.exports.execute = function (req, res) {
                     id: inviteid,
                     startdate: `${Date.now()}`,
                     enddate: `${Date.now() + 24 * 60 * 60 * 1000}`,
-                    group: {
-                        connect: {
-                            id: foundgroup.id
-                        }
-                    },
+                    key: foundgroup.key,
                     user: {
                         connect: {
                             id: user.id

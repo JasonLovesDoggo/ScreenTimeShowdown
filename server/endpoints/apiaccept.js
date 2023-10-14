@@ -7,33 +7,35 @@ module.exports.verify = function (req, res) {
     return req.user;
 }
 
-module.exports.execute = function (req, res) {
-    if (req.body.id) {
-        prisma.groupInvite.findUnique({
-            where: {
-                id: req.body.id
+module.exports.execute = async function (req, res) {
+    if (req.body.id, req.body.key) {
+        try {
+            const foundgroup = await prisma.group.findUnique({
+                where: {
+                    id: req.body.id
+                }
+            });
+            if (!foundgroup) {
+                res.sendStatus(404);
             }
-        }).then((invite) => {
+            if (foundgroup.key !== req.body.key) {
+                res.sendStatus(403);
+            }
             prisma.group.update({
                 where: {
-                    id: invite.groupid
+                    id: req.body.id
                 },
                 data: {
                     users: {
-                        connect: [{id: invite.userid}] // Add the user to the group
-                    },
-                    logs: {
-                        create: {
-                            message: `User ${invite.userid} has accepted the invite!`,
-                        }
+                        connect: [{id: req.user.id}]
                     }
                 }
             })
             res.json({message: "invitation accepted!"});
-        }).catch((err) => {
-            console.log(err);
-            res.status(500).json({ error: "Internal server error" })
-        });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ error: error });
+        }
     } else {
         res.status(400).json({ error: `Invalid form` });
     }

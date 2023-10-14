@@ -30,7 +30,7 @@ model Group {
   bet       Int // amount of money, in dollars, each person bets
   pot       Int // the current pot
   logs      GroupLog[] // a lot of all group activities e.g. "new user joined" or "x logged into insta!" etc etc
-  invites   GroupInvite[]
+  key       String
 }
 
 model GroupInvite {
@@ -38,7 +38,7 @@ model GroupInvite {
   startdate String // when the invite was created
   enddate   String // expiry date of invite
   groupid   String
-  group     Group  @relation(fields: [groupid], references: [id])
+  key       String
   user      User   @relation(fields: [userid], references: [id])
   userid    String
 }
