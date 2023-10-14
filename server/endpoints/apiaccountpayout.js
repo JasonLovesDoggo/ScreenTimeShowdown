@@ -38,6 +38,7 @@ module.exports.execute = function (req, res) {
                     udfs: [
                         `stshowdown-${transid}`
                     ],
+                    amount: parseInt(req.body.amount)
                     //shipping_cost: 0,
                     //"bank_id": 101,
                     //return_url: `https://${config.apidomain}/account/topup?pending=true`,
