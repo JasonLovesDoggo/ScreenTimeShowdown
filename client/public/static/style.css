@@ -1,0 +1,135 @@
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --dark-purple: #8052ec;
+  --violet: #d161ff;
+  --pop: "Poppins", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  padding: 100px 0;
+  background: linear-gradient(135deg, var(--dark-purple), var(--violet));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.5),
+    rgba(255, 255, 255, 0.8)
+  );
+  border-radius: 10px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  width: 40%;
+  min-width: 450px;
+  padding: 30px 40px;
+}
+
+#newtask {
+  position: relative;
+  background-color: #fff;
+  padding: 30px 20px;
+  border-radius: 5px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+#newtask input {
+  width: 70%;
+  height: 45px;
+  font-family: var(--pop);
+  font-size: 15px;
+  border: 2px solid #d1d3d4;
+  padding: 12px;
+  color: #111;
+  font-weight: 500;
+  position: relative;
+  border-radius: 5px;
+}
+
+#newtask input:focus {
+  outline: none;
+  border-color: var(--dark-purple);
+}
+
+#newtask button {
+  position: relative;
+  float: right;
+  width: 20%;
+  height: 45px;
+  border-radius: 5px;
+  font-family: var(--pop);
+  font-weight: 500;
+  font-size: 16px;
+  background-color: var(--dark-purple);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+#tasks {
+  background-color: #fff;
+  padding: 30px 20px;
+  margin-top: 60px;
+  border-radius: 10px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  position: relative;
+}
+
+.task {
+  background-color: #fff;
+  padding: 5px 10px;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid #d1d3d4;
+  cursor: pointer;
+}
+
+.task span {
+  flex-grow: 1;
+  font-family: var(--pop);
+  font-size: 15px;
+  font-weight: 400;
+  overflow-wrap: anywhere;
+  padding-right: 50px;
+  hyphens: auto;
+}
+
+.task button {
+  background-color: var(--dark-purple);
+  color: #fff;
+  height: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+#footer {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+  font-family: var(--pop);
+
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+.completed {
+  text-decoration: line-through;
+}
