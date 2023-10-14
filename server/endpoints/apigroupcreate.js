@@ -22,6 +22,7 @@ module.exports.execute = function (req, res) {
                 interval: req.body.interval * 24 * 60 * 60 * 1000,
                 bet: req.body.bet,
                 pot: 0,
+                surviving: `${req.user.id},`,
                 logs: {create: []}
             }
         }).then((group) => {

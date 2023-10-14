@@ -18,6 +18,7 @@ module.exports.execute = async function (req, res) {
             if (!foundgroup) {
                 res.sendStatus(404);
             }
+            const updatedlist = foundgroup.surviving + `${req.user.id},`;
             const updatedgroup = await prisma.group.update({
                 where: {
                     id: req.body.id
@@ -28,6 +29,9 @@ module.exports.execute = async function (req, res) {
                 data: {
                     users: {
                         connect: [{ id: req.user.id }]
+                    },
+                    surviving: {
+                        updatedlist
                     }
                 }
             })
