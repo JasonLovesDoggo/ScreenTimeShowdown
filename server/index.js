@@ -1,3 +1,4 @@
+
 process.env.NODE_ENV = "production";
 
 const express = require("express");
@@ -46,7 +47,7 @@ fs.readdirSync("./endpoints/").forEach(function (file) {
 
 //app.use(express.static('./client/dist', { extensions: ["html"] }));
 
-app.use('/', function (req, res) {
+app.get('/', function (req, res) {
     //res.sendFile(path.join(__dirname + `/client/dist/index.html`));
     res.json({ urbad: true });
 });
