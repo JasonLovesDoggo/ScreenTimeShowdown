@@ -8,10 +8,31 @@ generator client {
 }
 
 model User {
-  id String @id
-  username String @unique
-  password String
-  money Int @default(0)
-  admin Boolean @default(false)
+  id           String  @id
+  username     String  @unique
+  password     String
+  money        Int     @default(0)
+  admin        Boolean @default(false)
   registertime String
+  groups       Group[]
+}
+
+model Group {
+  id        String     @id
+  name      String
+  users     User[]
+  startdate String
+  enddate   String
+  interval  Int //number of days
+  bet       Int //amount of money, in dollars, each person bets
+  pot       Int //the current pot
+  logs      GroupLog[]
+}
+
+model GroupLog {
+  id      String @id
+  title   String
+  content String
+  groupid String
+  group   Group  @relation(fields: [groupid], references: [id])
 }
