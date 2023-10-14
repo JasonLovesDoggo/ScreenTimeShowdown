@@ -25,7 +25,7 @@ model User {
 model Transaction {
   id        String @id
   amount    Int
-  status    String //this will be "waiting..." "pending approval" or "completed" 
+  status    String //this will be "authorizing" "waiting..." "pending approval" "completed" "failed" 
   udfs      String @unique
   paybiltid String @unique
   user      User   @relation(fields: [userid], references: [id])
