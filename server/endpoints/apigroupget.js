@@ -8,10 +8,10 @@ module.exports.verify = function (req, res) {
 }
 
 module.exports.execute = function (req, res) {
-    if (req.body.id) {
+    if (req.query.id) {
         prisma.group.findUnique({
             where: {
-                id: req.body.id
+                id: req.query.id
             },
             include: {
                 logs: {
@@ -34,6 +34,6 @@ module.exports.execute = function (req, res) {
             res.status(500).json({ error: "Internal server error" });
         });
     } else {
-        res.status(400).json({ error: `Invalid form` });
+        res.status(400).json({ error: `Invalid` });
     }
 }
