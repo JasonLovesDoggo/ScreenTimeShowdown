@@ -8,10 +8,10 @@ module.exports.verify = function (req, res) {
 }
 
 module.exports.execute = function (req, res) {
-    if (req.body.groupid) {
+    if (req.body.id) {
         prisma.group.findUnique({
             where: {
-                id: req.body.groupid
+                id: req.body.id
             }
         }).then((group) => {
             res.json({ invites: group.invites })

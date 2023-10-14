@@ -18,10 +18,11 @@ module.exports.execute = function (req, res) {
                 id: groupid,
                 name: req.body.name,
                 users: {
-                    connect: {id: req.user.id}},
+                    connect: [req.user]
+                },
                 startdate: '0',
                 enddate: '0',
-                interval: req.body.interval,
+                interval: req.body.interval * 24 * 60 * 60 * 1000,
                 bet: req.body.bet,
                 pot: 0,
                 logs: {},

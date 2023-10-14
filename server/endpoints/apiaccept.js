@@ -2,29 +2,35 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 module.exports.name = "/api/accept";
-module.exports.method = "PUT";
+module.exports.method = "POST";
 module.exports.verify = function (req, res) {
     return req.user;
 }
 
 module.exports.execute = function (req, res) {
-    if (req.body.inviteid) {
+    if (req.body.id) {
         prisma.invite.findUnique({
             where: {
-                id: req.body.inviteid
+                id: req.body.id
             }
         }).then((invite) => {
             const user = invite.user;
-            const users = invite.group.users;
             prisma.group.update({
                 where: {
                     id: invite.group.id
                 },
                 data: {
-                    users: [...users, user],
-                    logs: [...group.logs, `${user.id} joined!`]
+                    users: {
+                        connect: [user] // Add the user to the group
+                    },
+                    logs: {
+                        push: {
+                            message: `User ${user.username} has accepted the invite!`,
+                        }
+                    }
                 }
             })
+            res.json({message: "invitation accepted!"});
         }).catch((err) => {
             console.log(err);
             res.status(500).json({ error: "Internal server error" })

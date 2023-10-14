@@ -19,7 +19,10 @@ module.exports.execute = function (req, res) {
                 enddate: Date.now() + interval,
                 pot: bet * users.length
             }
-        }).catch(() => res.status(500).json({ error : "Internal server error" }));
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).json({ error : `${err}` })
+        });
 
         prisma.group.findUnique({
             where: {

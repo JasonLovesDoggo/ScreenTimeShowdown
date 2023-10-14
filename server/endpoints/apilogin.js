@@ -35,7 +35,7 @@ module.exports.execute = function (req, res) {
                                 id: user.id,
                                 money: user.money,
                                 admin: user.admin,
-                                registertime: parseInt(user.registertime)
+                                registertime: `${parseInt(user.registertime)}`
                             }, secret.jwt);
                             res.json({ token: token });
                         }
