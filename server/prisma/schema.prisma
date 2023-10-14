@@ -14,11 +14,10 @@ model User {
   username     String        @unique
   //email        String        @unique
   password     String
-  money        Int           @default(0) //users can change this by topping up or paying out 
+  money        Int           @default(0) // users can change this by topping up or paying out
   admin        Boolean       @default(false)
   registertime String
   groups       Group[]
-  invites      GroupInvite[]
   Transaction  Transaction[]
 }
 
@@ -36,23 +35,12 @@ model Group {
   id        String        @id
   name      String
   users     User[]
-  startdate String //startdate of 0 means it has not started
-  enddate   String //when enddate is reached, the interval task should calculate new bets/pot + set a new end date with the given interval
-  interval  Int //number of days
-  bet       Int //amount of money, in dollars, each person bets
-  pot       Int //the current pot
+  startdate String // startdate of 0 means it has not started
+  enddate   String // when enddate is reached, the interval task should calculate new bets/pot + set a new end date with the given interval
+  interval  Int // number of days
+  bet       Int // amount of money, in dollars, each person bets
+  pot       Int // the current pot
   logs      GroupLog[] // a lot of all group activities e.g. "new user joined" or "x logged into insta!" etc etc
-  invites   GroupInvite[]
-}
-
-model GroupInvite {
-  id        String @id
-  startdate String //when the invite was created
-  enddate   String //expiry date of invite
-  groupid   String
-  group     Group  @relation(fields: [groupid], references: [id])
-  user      User   @relation(fields: [userid], references: [id])
-  userid    String
 }
 
 model GroupLog {

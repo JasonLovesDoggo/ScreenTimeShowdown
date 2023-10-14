@@ -33,7 +33,9 @@ module.exports.execute = function (req, res) {
                         }
                     }).then(() => {
                         res.json({ message: 'success!', userid: userid });
-                    }).catch(() => res.status(500).json({ error: "Internal server error" }));
+                    }).catch((dbError) => {
+                            res.status(500).json({error: 'Database error', message: dbError.message});
+                        });
                 }
             });
         }
