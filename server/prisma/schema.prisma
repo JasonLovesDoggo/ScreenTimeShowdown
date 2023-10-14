@@ -12,11 +12,23 @@ generator client {
 model User {
   id           String        @id
   username     String        @unique
+  //email        String        @unique
   password     String
   money        Int           @default(0) // users can change this by topping up or paying out
   admin        Boolean       @default(false)
   registertime String
   groups       Group[]
+  Transaction  Transaction[]
+}
+
+model Transaction {
+  id        String @id
+  amount    Int
+  status    String //this will be "authorizing" "waiting..." "pending approval" "completed" "failed" 
+  udfs      String @unique
+  paybiltid String @unique
+  user      User   @relation(fields: [userid], references: [id])
+  userid    String
 }
 
 model Group {
