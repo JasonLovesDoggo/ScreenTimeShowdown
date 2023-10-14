@@ -33,14 +33,11 @@ module.exports.execute = async function (req, res) {
                         }
                     }
                 }));
-                console.log(JSON.stringify(user));
             });
             await prisma.$transaction(transactionlist);
 
-            let pot = group.pot + ((group.users.length+1) * group.bet);
-            console.log(pot);
+            let pot = group.pot + (group.users.length * group.bet);
             let enddate = Date.now() + group.interval;
-
             const updatedgroup = await prisma.group.update({
                 where: {
                     id: req.body.id
@@ -51,7 +48,6 @@ module.exports.execute = async function (req, res) {
                     pot: pot
                 }
             });
-            console.log(JSON.stringify(updatedgroup));
             res.json({group: updatedgroup});
         } catch (error) {
             console.log(error);
