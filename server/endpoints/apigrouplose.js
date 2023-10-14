@@ -18,6 +18,7 @@ module.exports.execute = async function (req, res) {
                     groups: true
                 }
             });
+            console.log(JSON.stringify(user));
             // Subtract money from each user in the group
             let transactionlist = [];
             user.groups.forEach(group => {
