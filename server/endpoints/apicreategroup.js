@@ -11,16 +11,13 @@ module.exports.verify = function (req, res) {
 module.exports.execute = function (req, res) {
     if (req.body.name && req.body.bet && req.body.interval) {
         console.log("valid request");
+        console.log(req.user.id)
         let groupid = nanoid.nanoid(16);
         prisma.group.create({
             data: {
                 id: groupid,
                 name: req.body.name,
-                users: {
-                    connect: [{
-                        id: req.user.id
-                    }]
-                },
+                users: [req.user.id],
                 startdate: '0',
                 enddate: '0',
                 interval: req.body.interval,
