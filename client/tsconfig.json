@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist",
+        "lib": ["es2016", "DOM"],
+        "esModuleInterop": true,
+        "target": "ES6",
+        "jsx": "react",
+        "module": "CommonJS",
+        "strict": true,
+        "skipLibCheck": true,
+        "allowJs": true
+    },
+    "include": [
+        "./components"
+    ]
+}
