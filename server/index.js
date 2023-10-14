@@ -33,8 +33,9 @@ fs.readdirSync("./endpoints/").forEach(function (file) {
                 try {
                     m.execute(req, res, next);
                 }
-                catch {
-                    res.status(500).json({ status: 500, error: 'Internal server error' });
+                catch (err) {
+                    console.log(err);
+                    res.status(500).json({ status: 500, error: err });
                 }
             }
             else {

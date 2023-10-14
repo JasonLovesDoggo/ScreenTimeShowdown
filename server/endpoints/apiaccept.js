@@ -9,23 +9,22 @@ module.exports.verify = function (req, res) {
 
 module.exports.execute = function (req, res) {
     if (req.body.id) {
-        prisma.invite.findUnique({
+        prisma.groupInvite.findUnique({
             where: {
                 id: req.body.id
             }
         }).then((invite) => {
-            const user = invite.user;
             prisma.group.update({
                 where: {
-                    id: invite.group.id
+                    id: invite.groupid
                 },
                 data: {
                     users: {
-                        connect: [user] // Add the user to the group
+                        connect: [{id: invite.userid}] // Add the user to the group
                     },
                     logs: {
-                        push: {
-                            message: `User ${user.username} has accepted the invite!`,
+                        create: {
+                            message: `User ${invite.userid} has accepted the invite!`,
                         }
                     }
                 }

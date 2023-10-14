@@ -18,15 +18,15 @@ module.exports.execute = function (req, res) {
                 id: groupid,
                 name: req.body.name,
                 users: {
-                    connect: [req.user]
+                    connect: [{id: req.user.id}]
                 },
                 startdate: '0',
                 enddate: '0',
                 interval: req.body.interval * 24 * 60 * 60 * 1000,
                 bet: req.body.bet,
                 pot: 0,
-                logs: {},
-                invites: {}
+                logs: {create: []},
+                invites: {create: []}
             }
         }).then((group) => {
             res.json({ message: 'success!', group: group });
