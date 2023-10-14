@@ -18,7 +18,7 @@ model User {
   admin        Boolean       @default(false)
   registertime String
   groups       Group[]
-  transactions  Transaction[]
+  transactions Transaction[]
 }
 
 model Transaction {
@@ -35,6 +35,7 @@ model Group {
   id        String     @id
   name      String
   users     User[]
+  surviving String // csv containing IDs of surviving users
   startdate String // startdate of 0 means it has not started
   enddate   String // when enddate is reached, the interval task should calculate new bets/pot + set a new end date with the given interval
   interval  Int // number of days
