@@ -44,9 +44,11 @@ model Group {
 }
 
 model GroupLog {
-  id      String @id
-  title   String
-  content String
-  groupid String
-  group   Group  @relation(fields: [groupid], references: [id])
+  id        String @unique
+  title     String
+  number    Int    @id @default(autoincrement())
+  timestamp String
+  content   String
+  groupid   String
+  group     Group  @relation(fields: [groupid], references: [id])
 }

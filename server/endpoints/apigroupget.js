@@ -12,14 +12,26 @@ module.exports.execute = function (req, res) {
         prisma.group.findUnique({
             where: {
                 id: req.body.id
+            },
+            include: {
+                logs: {
+                    orderBy: {
+                        number: 'desc'
+                    },
+                    take: 10
+                }
             }
         }).then((group) => {
-            let logs = group.logs;
-            if (logs.length > 10) logs = logs.slice(-10);
+            if (group.users.filter(e => e.id === req.user.id).length == 0) {
+                res.status(401).json({ status: 401, error: "Unauthorized" });
+            }
+            else {
+                res.json(group);
+            }
             res.json({ logs: logs })
         }).catch((err) => {
             console.log(err);
-            res.status(500).json({ error: "Internal server error" })
+            res.status(500).json({ error: "Internal server error" });
         });
     } else {
         res.status(400).json({ error: `Invalid form` });
