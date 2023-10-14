@@ -19,7 +19,8 @@ module.exports.execute = function (req, res) {
                         number: 'desc'
                     },
                     take: 10
-                }
+                },
+                users: true
             }
         }).then((group) => {
             if (group.users.filter(e => e.id === req.user.id).length == 0) {
