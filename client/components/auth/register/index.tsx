@@ -44,7 +44,7 @@ export const Register = (): JSX.Element => {
             ...data
         }).then((res) => {
             console.log("Success register:", res.data);
-            nav(next ? '/login' : `/login?next=${next}`);
+            nav(next ? `/login?next=${encodeURIComponent(next!)}` : '/login');
         }).catch((err) => {
             session.notify(`Error: ${err.response.data.error}`, "error");
         });
