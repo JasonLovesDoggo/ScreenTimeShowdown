@@ -4,11 +4,13 @@ process.env.NODE_ENV = "production";
 const express = require("express");
 const fs = require('fs');
 const path = require('path');
+const cors = require('cors');
 const auth = require('./lib/auth');
 
 const app = express();
 const PORT = 8080;
 
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ strict: true }));
 app.enable('trust proxy');
