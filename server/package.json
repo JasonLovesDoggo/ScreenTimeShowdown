@@ -10,7 +10,10 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@prisma/client": "^5.4.2",
-    "express": "^4.18.2"
+    "bcrypt": "^5.1.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "nanoid": "^3.3.6"
   },
   "devDependencies": {
     "prisma": "^5.4.2"
