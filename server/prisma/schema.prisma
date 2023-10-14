@@ -32,7 +32,7 @@ model Transaction {
 }
 
 model Group {
-  id        String        @id
+  id        String     @id
   name      String
   users     User[]
   startdate String // startdate of 0 means it has not started

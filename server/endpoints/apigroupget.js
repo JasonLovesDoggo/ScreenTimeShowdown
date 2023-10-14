@@ -1,7 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-module.exports.name = "/api/get/group/invites";
+module.exports.name = "/api/group/get";
 module.exports.method = "GET";
 module.exports.verify = function (req, res) {
     return req.user;
@@ -14,7 +14,9 @@ module.exports.execute = function (req, res) {
                 id: req.body.id
             }
         }).then((group) => {
-            res.json({ invites: group.invites })
+            let logs = group.logs;
+            if (logs.length > 10) logs = logs.slice(-10);
+            res.json({ logs: logs })
         }).catch((err) => {
             console.log(err);
             res.status(500).json({ error: "Internal server error" })

@@ -2,7 +2,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const nanoid = require('nanoid');
 
-module.exports.name = "/api/startshowdown";
+module.exports.name = "/api/group/startshowdown";
 module.exports.method = "POST";
 module.exports.verify = function (req, res) {
     return req.user;
@@ -21,7 +21,7 @@ module.exports.execute = function (req, res) {
             }
         }).catch((err) => {
             console.log(err);
-            res.status(500).json({ error : `${err}` })
+            res.status(500).json({ error: `${err}` })
         });
 
         prisma.group.findUnique({

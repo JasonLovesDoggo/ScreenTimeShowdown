@@ -2,7 +2,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const nanoid = require('nanoid');
 
-module.exports.name = "/api/creategroup";
+module.exports.name = "/api/group/create";
 module.exports.method = "PUT";
 module.exports.verify = function (req, res) {
     return req.user;
