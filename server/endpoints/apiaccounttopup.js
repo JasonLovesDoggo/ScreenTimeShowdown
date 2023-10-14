@@ -58,7 +58,6 @@ module.exports.execute = function (req, res) {
                     res.json({
                         id: transid,
                         amount: parseInt(req.body.amount),
-                        udfs: `stshowdown-${transid}`,
                         paybiltid: axres.data.txid,
                         redirect: axres.data.bank_payment_url
                     });
