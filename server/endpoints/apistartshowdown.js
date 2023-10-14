@@ -19,11 +19,19 @@ module.exports.execute = function (req, res) {
                 enddate: Date.now() + interval,
                 pot: bet * users.length
             }
-        }).then(group => {
+        }).catch(() => res.status(500).json({ error : "Internal server error" }));
+
+        prisma.group.findUnique({
+            where: {
+                id: req.body.id
+            },
+        }).then((group) => {
+            console.log(JSON.stringify(group));
             if (!group) {
                 res.status(401).json({ error: "Group was not found" });
             } else {
                 group.users.forEach(user => {
+                    console.log(user);
                     prisma.user.update({
                         where: {
                             id: user.id
@@ -34,7 +42,10 @@ module.exports.execute = function (req, res) {
                     })
                 });
             }
-        }).catch(() => res.status(500).json({ error: "Internal server error" }));
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).json({ error: `${err}` })
+        });
     } else {
         res.status(400).json({ error: `Invalid form` });
     }
