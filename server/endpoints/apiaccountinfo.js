@@ -21,7 +21,12 @@ module.exports.execute = function (req, res) {
             insta: true
         }
     }).then(user => {
-        delete user.password;
-        res.json(user);
+        if (user) {
+            delete user.password;
+            res.json(user);
+        }
+        else {
+            res.status(404).json({urbad: true});
+        }
     });
 }
