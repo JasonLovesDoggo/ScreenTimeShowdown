@@ -1,8 +1,3 @@
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
-const axios = require('axios').default;
-const config = require('../config');
-const { nanoid } = require('nanoid');
 
 module.exports.name = "/api/meta/webhook";
 module.exports.method = "GET";
@@ -11,7 +6,7 @@ module.exports.verify = function (req, res) {
 }
 const token = 'hello'
 module.exports.execute = function (req, res) {
-    console.log(req)
+    console.log(req.body)
     if (req.query["hub.challenge"] && req.query["hub.verify_token"] === token) {
         res.send(req.query["hub.challenge"]);
     }
