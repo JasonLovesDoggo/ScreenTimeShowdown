@@ -1,5 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+const { nanoid } = require('nanoid');
 
 module.exports.name = "/api/invite/accept";
 module.exports.method = "POST";
@@ -19,6 +20,16 @@ module.exports.execute = async function (req, res) {
                 res.sendStatus(404);
             }
             const updatedlist = foundgroup.surviving + `${req.user.id},`;
+            let logid = nanoid(16);
+            await prisma.groupLog.create({
+                data: {
+                    id: logid,
+                    title: "Added user to group",
+                    timestamp: `${Date.now()}`,
+                    content: `${req.user.username} has been added to group ${foundgroup.id}.`,
+                    groupid: foundgroup.id,
+                }
+            })
             const updatedgroup = await prisma.group.update({
                 where: {
                     id: req.body.id
@@ -30,10 +41,7 @@ module.exports.execute = async function (req, res) {
                     users: {
                         connect: [{ id: req.user.id }]
                     },
-                    surviving: updatedlist,
-                    logs: {
-                        create: `${req.user.username} has joined the group!`
-                    }
+                    surviving: updatedlist
                 }
             })
             console.log(JSON.stringify(updatedgroup))
