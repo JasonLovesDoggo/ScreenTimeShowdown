@@ -25,8 +25,7 @@ module.exports.execute = function (req, res) {
                 interval: req.body.interval * 24 * 60 * 60 * 1000,
                 bet: req.body.bet,
                 pot: 0,
-                logs: {create: []},
-                invites: {create: []}
+                logs: {create: []}
             }
         }).then((group) => {
             res.json({ message: 'success!', group: group });

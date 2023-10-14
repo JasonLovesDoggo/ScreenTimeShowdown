@@ -17,7 +17,6 @@ model User {
   admin        Boolean       @default(false)
   registertime String
   groups       Group[]
-  invites      GroupInvite[]
 }
 
 model Group {
@@ -30,17 +29,6 @@ model Group {
   bet       Int // amount of money, in dollars, each person bets
   pot       Int // the current pot
   logs      GroupLog[] // a lot of all group activities e.g. "new user joined" or "x logged into insta!" etc etc
-  key       String
-}
-
-model GroupInvite {
-  id        String @id
-  startdate String // when the invite was created
-  enddate   String // expiry date of invite
-  groupid   String
-  key       String
-  user      User   @relation(fields: [userid], references: [id])
-  userid    String
 }
 
 model GroupLog {
