@@ -7,33 +7,44 @@ module.exports.method = "PUT";
 module.exports.verify = function (req, res) {
     return req.user;
 }
-
-module.exports.execute = function (req, res) {
-    if (req.body.name && req.body.bet && req.body.interval) {
-        console.log("valid request");
-        console.log(req.user.id)
-        let groupid = nanoid.nanoid(16);
-        prisma.group.create({
-            data: {
-                id: groupid,
-                name: req.body.name,
-                users: {
-                    connect: [{id: req.user.id}]
+module.exports.execute = async function (req, res) {
+    if (req.body.id) {
+        try {
+            const group = await prisma.group.findUnique({
+                where: {
+                    id: req.body.id
                 },
-                startdate: '0',
-                enddate: '0',
-                interval: req.body.interval * 24 * 60 * 60 * 1000,
-                bet: req.body.bet,
-                pot: 0,
-                logs: {create: []}
-            }
-        }).then((group) => {
-            res.json({ message: 'success!', group: group });
-        }).catch((err) => {
-            console.log(err);
-            res.status(500).json({ error: "Internal server error" })
-        });
+                include: {
+                    users: true
+                }
+            });
+            // Subtract money from each user in the group
+            group.users.forEach(async user => {
+                await prisma.user.update({
+                    where: {
+                        id: user.id
+                    },
+                    data: {
+                        money: money - bet
+                    }
+                })
+            })
+            let pot = group.pot;
+            pot += group.users.length * group.bet;
+
+            prisma.group.update({
+                where: {
+                    id: req.body.id
+                },
+                data: {
+                    pot: pot
+                }
+            });
+        } catch (error) {
+            console.log(error);
+            res.send(500).json({error: error});
+        }
     } else {
-        res.status(400).json({ error: `Invalid form` });
+        res.status(400).json({error: "Invalid form"})
     }
 }
