@@ -18,9 +18,12 @@ module.exports.execute = async function (req, res) {
             if (!foundgroup) {
                 res.sendStatus(404);
             }
-            prisma.group.update({
+            const updatedgroup = await prisma.group.update({
                 where: {
                     id: req.body.id
+                },
+                include: {
+                    users: true
                 },
                 data: {
                     users: {
@@ -28,6 +31,7 @@ module.exports.execute = async function (req, res) {
                     }
                 }
             })
+            console.log(JSON.stringify(updatedgroup))
             res.status(200).json({ message: "invitation accepted!" });
         } catch (error) {
             console.log(error);

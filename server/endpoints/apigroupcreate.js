@@ -7,11 +7,8 @@ module.exports.method = "PUT";
 module.exports.verify = function (req, res) {
     return req.user;
 }
-
 module.exports.execute = function (req, res) {
     if (req.body.name && req.body.bet && req.body.interval) {
-        console.log("valid request");
-        console.log(req.user.id)
         let groupid = nanoid.nanoid(16);
         prisma.group.create({
             data: {
