@@ -41,10 +41,14 @@ module.exports.handleloss = async (uid) => {
                     data: {
                         pot: 0,
                         startdate: '0',
-                        enddate: '0'
+                        enddate: '0',
+                        logs: {
+                            create: `${req.user.username} is the last one standing`
+                        }
                     }
                 })
-                return await generate(winner.name, winnerid, day, 4, )
+                return await generate(winner.name, winnerid, day, 4, );
+
                 // Set start and end date to 0
                 // Call AI generation function
                 // 

@@ -32,6 +32,9 @@ module.exports.execute = async function (req, res) {
                     },
                     surviving: {
                         updatedlist
+                    },
+                    logs: {
+                        create: `${req.user.username} has joined the group!`
                     }
                 }
             })
