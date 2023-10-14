@@ -20,20 +20,24 @@ module.exports.execute = async function (req, res) {
                 }
             });
             // Subtract money from each user in the group
-            group.users.forEach(async user => {
-                let money = user.money;
-                let bet = group.bet;
-                await prisma.user.update({
+            let transactionlist = [];
+            group.users.forEach(user => {
+                //let money = user.money;
+                transactionlist.push(prisma.user.update({
                     where: {
                         id: user.id
                     },
                     data: {
-                        money: money - bet
+                        money: {
+                            decrement: group.bet
+                        }
                     }
-                })
+                }));
                 console.log(JSON.stringify(user));
-            })
-            let pot = group.pot + (group.users.length * group.bet);
+            });
+            await prisma.$transaction(transactionlist);
+
+            let pot = group.pot + ((group.users.length+1) * group.bet);
             console.log(pot);
             let enddate = Date.now() + group.interval;
 
