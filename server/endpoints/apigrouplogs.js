@@ -22,7 +22,10 @@ module.exports.execute = function (req, res) {
                 logs: true
             }
         }).then((group) => {
-            if (group.users.filter(e => e.id === req.user.id).length == 0) {
+            if(!group) {
+                res.status(404).json({ status: 404, error: "Group not found" });
+            }
+            else if (group.users.filter(e => e.id === req.user.id).length == 0) {
                 res.status(401).json({ status: 401, error: "Unauthorized" });
             }
             else {
