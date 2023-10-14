@@ -17,7 +17,8 @@ module.exports.execute = function (req, res) {
             data: {
                 id: groupid,
                 name: req.body.name,
-                users: [req.user.id],
+                users: {
+                    connect: {id: req.user.id}},
                 startdate: '0',
                 enddate: '0',
                 interval: req.body.interval,
