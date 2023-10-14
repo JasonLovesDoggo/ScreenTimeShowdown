@@ -19,6 +19,14 @@ model User {
   registertime String
   groups       Group[]
   transactions Transaction[]
+  insta        Insta?
+}
+
+model Insta {
+  id         String @id
+  lastonline String //date of last online
+  user       User   @relation(fields: [userid], references: [id])
+  userid     String @unique
 }
 
 model Transaction {
