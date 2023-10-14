@@ -22,7 +22,7 @@ model User {
 
 model Group {
   id        String        @id
-  name      String        @unique
+  name      String
   users     User[]
   startdate String //startdate of 0 means it has not started
   enddate   String //when enddate is reached, the interval task should calculate new bets/pot + set a new end date with the given interval
