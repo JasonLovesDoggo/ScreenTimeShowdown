@@ -41,8 +41,10 @@ module.exports.execute = function (req, res) {
                 }
             ]
         }, {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${config.paybilt.bearer}`
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${config.paybilt.bearer}`
+            }
         }).then((axres) => {
             if (axres.data.status === "approved") {
                 prisma.transaction.create({
