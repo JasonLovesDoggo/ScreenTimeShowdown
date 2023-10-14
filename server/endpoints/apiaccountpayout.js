@@ -42,8 +42,10 @@ module.exports.execute = function (req, res) {
                     //"bank_id": 101,
                     //return_url: `https://${config.apidomain}/account/topup?pending=true`,
                 }, {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${config.paybilt.bearer}`
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${config.paybilt.bearer}`
+                    }
                 }).then((axres) => {
                     if (axres.data.status === "approved") {
                         prisma.user.update({
