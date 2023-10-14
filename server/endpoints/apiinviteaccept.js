@@ -1,7 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-module.exports.name = "/api/accept";
+module.exports.name = "/api/invite/accept";
 module.exports.method = "POST";
 module.exports.verify = function (req, res) {
     return req.user;
@@ -24,11 +24,11 @@ module.exports.execute = async function (req, res) {
                 },
                 data: {
                     users: {
-                        connect: [{id: req.user.id}]
+                        connect: [{ id: req.user.id }]
                     }
                 }
             })
-            res.status(200).json({message: "invitation accepted!"});
+            res.status(200).json({ message: "invitation accepted!" });
         } catch (error) {
             console.log(error);
             res.status(500).json({ error: error });
