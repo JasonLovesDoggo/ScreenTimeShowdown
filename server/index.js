@@ -3,6 +3,7 @@ process.env.NODE_ENV = "production";
 const express = require("express");
 const fs = require('fs');
 const path = require('path');
+const auth = require('./lib/auth');
 
 const app = express();
 const PORT = 8080;
@@ -11,6 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ strict: true }));
 app.enable('trust proxy');
 app.disable('x-powered-by');
+app.use(auth.authorization);
 
 //app.use('/site/files', express.static('static'));
 
