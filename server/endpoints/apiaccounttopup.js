@@ -52,7 +52,7 @@ module.exports.execute = function (req, res) {
                         udfs: `stshowdown-${transid}`,
                         paybiltid: axres.data.txid,
                         userid: req.user.id,
-                        status: 'waiting...'
+                        status: 'authorizing'
                     }
                 }).then(() => {
                     res.json({
