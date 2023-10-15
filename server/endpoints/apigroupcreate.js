@@ -15,7 +15,7 @@ module.exports.execute = function (req, res) {
                 id: groupid,
                 name: req.body.name,
                 users: {
-                    connect: [{id: req.user.id}]
+                    connect: [{ id: req.user.id }]
                 },
                 startdate: '0',
                 enddate: '0',
@@ -23,20 +23,17 @@ module.exports.execute = function (req, res) {
                 bet: req.body.bet,
                 pot: 0,
                 surviving: `${req.user.id},`,
-                logs: {create: []}
+                logs: {
+                    create: [{
+                        id: nanoid.nanoid(16),
+                        title: "Added user to group",
+                        timestamp: `${Date.now()}`,
+                        content: `${req.user.username} has created the group ${req.body.name}.`
+                    }]
+                }
             }
         }).then((group) => {
-            prisma.groupLog.create({
-                data: {
-                    id: nanoid.nanoid(16),
-                    title: "Added user to group",
-                    timestamp: `${Date.now()}`,
-                    content: `${req.user.username} has created the group ${req.body.name}.`,
-                    groupid: groupid
-                }
-            }).then(() => {
-                res.json({ message: 'success!', group: group });
-            });
+            res.json({ message: 'success!', group: group });
         }).catch((err) => {
             console.log(err);
             res.status(500).json({ error: "Internal server error" })
