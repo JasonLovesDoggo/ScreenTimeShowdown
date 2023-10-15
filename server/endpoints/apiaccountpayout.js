@@ -66,7 +66,6 @@ module.exports.execute = function (req, res) {
                         });
                     }
                     else {
-                        console.log(axres.data);
                         res.status(500).json({ status: 500, error: 'could not register payout' });
                     }
                 })
