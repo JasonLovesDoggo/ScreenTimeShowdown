@@ -1,6 +1,6 @@
 const {post} = require("axios");
 const {instaclientid, instaclientsecret, instaredirect} = require("../config");
-module.exports.name = "/auth/instagram/callback";
+module.exports.name = "/oauth/instagram/callback";
 module.exports.method = "GET";
 module.exports.verify = function (req, res) {
     return true;
