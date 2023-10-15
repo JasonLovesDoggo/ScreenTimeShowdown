@@ -52,7 +52,7 @@ export const Payouts = (): JSX.Element => {
                             axios.post(`${Routes.BASEURL}/api/account/topup`, {
                                 amount: 5
                             }).then((res) => {
-                                session.notify('Successfully topped up $5!', 'success');
+                                session.notify('Successfully added $5 to your balance!', 'success');
                                 axios.get(`${Routes.BASEURL}/api/account/info`).then((res) => {
                                     session.setUser(res.data);
                                 }).catch((err) => {
