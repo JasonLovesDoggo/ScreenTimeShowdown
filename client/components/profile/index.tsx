@@ -63,7 +63,7 @@ export const Payouts = (): JSX.Element => {
                                 session.notify('Error occurred in topping up balance', 'error');
                                 console.log("Error topping up:", err);
                             });
-                        }}>Top Up</Button>
+                        }}>Add $5</Button>
                     </Box>
                 </Box>
                 <Box sx={{ backgroundColor: "lightgray", padding: "1em", borderRadius: "12px", display: "flex", flexDirection: "column", gap: "0.5em", alignItems: "flex-start" }}>
