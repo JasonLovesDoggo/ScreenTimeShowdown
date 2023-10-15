@@ -67,7 +67,7 @@ export const Party = (): JSX.Element => {
 
                 {session.user.groups.length > 0 ?
                     <>
-                        <Typography variant="h3">You will be showdowning with:</Typography>
+                        <Typography variant="h5">You will be showdowning with:</Typography>
                         <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
                             {"id" in group ? group.users.map((user: User): JSX.Element => {
                                 return <PartyMemberCard name={user.username} key={user.id} />;
@@ -75,7 +75,7 @@ export const Party = (): JSX.Element => {
                         </div>
                     </> :
                     <>
-                        <Typography variant="h5" sx={{ mb: "0.5em" }}>No parties yet.</Typography>
+                        <Typography variant="h5" sx={{ mb: "0.5em" }}>No parties yet. You can also click on an invite link from a friend to join their party.</Typography>
                         <Button variant="contained" color="success" onClick={(ev) => {
                             ev.preventDefault();
                             axios.put(`${Routes.BASEURL}/api/group/create`, {

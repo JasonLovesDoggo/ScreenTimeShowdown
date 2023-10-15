@@ -3,6 +3,7 @@
     "start": "npx vite",
     "build": "npx vite build",
     "test": "jest --watch",
+	"predeploy": "npx vite build",
 	"deploy": "gh-pages -d build"
   },
   "dependencies": {

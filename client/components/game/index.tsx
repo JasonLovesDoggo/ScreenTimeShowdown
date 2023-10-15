@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 import { Alert, AlertColor, Autocomplete, Button, Snackbar, TextField, Typography } from "@mui/material";
 
 import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
-import { NavigateFunction, useNavigate } from "react-router-dom";
+import { Link, NavigateFunction, useNavigate } from "react-router-dom";
 import { Session, SessionContext } from "../../util/session";
 import Routes from "../../util/routes/routes";
 import { ShowdownLayout } from "../layout/showdown";
@@ -58,11 +58,11 @@ export const Game = (): JSX.Element => {
 
     return (
         <ShowdownLayout>
-            <div style={{
+            {!!session.user.groups && session.user.groups.length > 0 ? <div style={{
                 backgroundImage: "url('/static/img/showdown-2.jpg')",
                 backgroundColor: "#cdc8ff",
                 paddingTop: "1em",
-                paddingBottom: "1em"
+                paddingBottom: "1em",
             }}>
                 <Box sx={{
                     backgroundColor: "#f1f1f1",
@@ -108,7 +108,18 @@ export const Game = (): JSX.Element => {
                 <Box sx={{ backgroundColor: "lightgray", margin: "1em", padding: "1em", borderRadius: "12px" }}>
                     <GameLog />
                 </Box>
-            </div>
+            </div> :
+                <Box sx={{
+                    margin: "0em 1em 1em 1em",
+                    padding: "1em",
+                    borderRadius: "10px",
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: "1em"
+                }}>
+                    <Typography variant="h4">No ongoing games so far.</Typography>
+                    <Typography variant="body1">Head to <Link to="/party">My Party</Link> to create a party or click a join link from a friend.</Typography>
+                </Box>}
         </ShowdownLayout>
     );
 }
