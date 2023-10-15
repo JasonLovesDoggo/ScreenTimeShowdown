@@ -19,10 +19,14 @@ module.exports.execute = function (req, res) {
                         id: true
                     }
                 },
-                logs: true
-            }
+                logs: {
+                    orderBy: {
+                        number: 'desc'
+                    }
+                }
+            },
         }).then((group) => {
-            if(!group) {
+            if (!group) {
                 res.status(404).json({ status: 404, error: "Group not found" });
             }
             else if (group.users.filter(e => e.id === req.user.id).length == 0) {
