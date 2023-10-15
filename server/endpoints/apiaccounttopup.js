@@ -31,7 +31,7 @@ module.exports.execute = function (req, res) {
             ],
             //shipping_cost: 0,
             //"bank_id": 101,
-            return_url: `https://${config.apidomain}/account/topup?pending=true`,
+            return_url: `https://${config.apidomain}/payouts`,
             items: [
                 {
                     "name": "Top Up",
