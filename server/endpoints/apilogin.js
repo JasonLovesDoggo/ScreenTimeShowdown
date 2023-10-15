@@ -30,6 +30,7 @@ module.exports.execute = function (req, res) {
                             res.status(401).json({ error: "Incorrect username or email" });
                         }
                         else {
+
                             let token = jwt.sign({
                                 username: user.username,
                                 id: user.id,

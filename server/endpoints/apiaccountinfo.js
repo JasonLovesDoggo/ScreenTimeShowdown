@@ -1,8 +1,5 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
-const axios = require('axios').default;
-const config = require('../config');
-const { nanoid } = require('nanoid');
 
 module.exports.name = "/api/account/info";
 module.exports.method = "GET";

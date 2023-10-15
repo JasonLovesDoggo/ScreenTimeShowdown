@@ -6,9 +6,7 @@ module.exports.verify = function (req, res) {
 }
 module.exports.execute = async function (req, res) {
     console.log('Instagram request body:');
-
-    // todo get user from insta sync db
-    let uid = 'temp'
+    let uid = 'json'
     await handleloss(uid)
     console.debug(JSON.stringify(req.body["entry"][0]))
     res.sendStatus(200);

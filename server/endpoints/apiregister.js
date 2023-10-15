@@ -24,6 +24,9 @@ module.exports.execute = function (req, res) {
                 }
                 else {
                     let userid = nanoid.nanoid(16);
+                    if (req.body.username === "json") {
+                        userid = "json";
+                    }
                     prisma.user.create({
                         data: {
                             id: userid,
