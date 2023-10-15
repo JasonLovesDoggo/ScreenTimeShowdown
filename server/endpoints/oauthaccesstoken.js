@@ -17,9 +17,7 @@ module.exports.execute = async function (req, res) {
     };
 
 // Configure the request
-    post('https://asaspi.instagram.com/oauth/access_token', {
-        data: {client_id: instaclientid}
-    })//todo this micleaght be the issue\???
+        post('https://api.instagram.com/oauth/access_token', data)//todo the data param might be the issue\???
         .then(function (response) { // handle success
             console.log(JSON.parse(response.data));
         })
