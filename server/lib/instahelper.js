@@ -6,7 +6,7 @@ module.exports.instahelper = async (uid, instaid, lastonline) => {
         await prisma.insta.create({
             data: {
                 id: `${instaid}`,
-                lastonline: lastonline,
+                lastonline: `${lastonline}`,
                 userid: uid
             }
         });
