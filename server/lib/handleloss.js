@@ -19,7 +19,29 @@ module.exports.handleloss = async (uid) => {
             const logid = nanoid(16);
             let day = (Date.now() - parseInt(user.groups[i].startdate)) / (1000 * 60 * 60 * 24);
             console.log(day);
+            let winner = false;
             if (updatedlist.split(',').length === 2) {
+                winner = true;
+            }
+            const message = await generate(user.username, {}, 1, 1, 200);
+            transactionlist.push(prisma.group.update({
+                where: {
+                    id: user.groups[i].id
+                },
+                data: {
+                    surviving: updatedlist
+                }
+            }));
+            transactionlist.push(prisma.groupLog.create({
+                data: {
+                    id: logid,
+                    title: `${user.username} has lost the challenge`,
+                    timestamp: `${Date.now()}`,
+                    content: message,
+                    groupid: user.groups[i].id,
+                }
+            }));
+            if (winner) {
                 const winnerlogid = nanoid(16);
                 const winnerid = updatedlist.replace(',', '');
                 const winner = await prisma.user.findUnique({
@@ -27,7 +49,7 @@ module.exports.handleloss = async (uid) => {
                         id: winnerid
                     }
                 });
-                const message = await generate(winner.username, {}, day, 4, 200);
+                const message = await generate(winner.username, {}, 1, 4, 200);
                 transactionlist.push(prisma.user.update({
                     where: {
                         id: winner.id
@@ -58,24 +80,6 @@ module.exports.handleloss = async (uid) => {
                     }
                 }));
             }
-            const message = await generate(user.username, {}, day, 1, 200);
-            transactionlist.push(prisma.group.update({
-                where: {
-                    id: user.groups[i].id
-                },
-                data: {
-                    surviving: updatedlist
-                }
-            }));
-            transactionlist.push(prisma.groupLog.create({
-                data: {
-                    id: logid,
-                    title: `${user.username} has lost the challenge`,
-                    timestamp: `${Date.now()}`,
-                    content: message,
-                    groupid: user.groups[i].id,
-                }
-            }));
         }
         await prisma.$transaction(transactionlist);
     } catch (err) {
