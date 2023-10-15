@@ -7,5 +7,8 @@ module.exports = {
     apidomain: 'api.screentimeshowdown.tech',
     cohere: {
         apikey: secret.cohere
-    }
+    },
+    instaclientid: secret.instaclientid,
+    instaclientsecret: secret.instaclientsecret,
+    instaredirect: secret.instaredirect,
 }

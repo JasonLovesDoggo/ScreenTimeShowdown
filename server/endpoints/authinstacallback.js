@@ -1,14 +1,15 @@
 const {post} = require("axios");
+const {instaclientid, instaclientsecret, instaredirect} = require("../config");
 module.exports.name = "/auth/instagram/callback";
 module.exports.method = "GET";
 module.exports.verify = function (req, res) {
     return true;
 }
 module.exports.execute = async function (req, res) {
-    let data = {'client_id' : process.env.INSTACLIENTID,
-        'client_secret' : process.env.INSTACLIENTSECRET,
+    let data = {'client_id' : instaclientid,
+        'client_secret' : instaclientsecret,
         'grant_type' : 'authorization_code',
-        'redirect_uri' : process.env.INSTAREDIRECT,
+        'redirect_uri' : instaredirect,
         'code' : req.query.code
     };
 
