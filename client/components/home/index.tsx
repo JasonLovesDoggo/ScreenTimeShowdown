@@ -97,7 +97,7 @@ export const Home = (): JSX.Element => {
                         What are we?
                     </Typography>
                     <Typography variant="h6">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Viverra vitae congue eu consequat. Lorem mollis aliquam ut porttitor leo. Scelerisque fermentum dui faucibus in. Senectus et netus et malesuada fames ac turpis. In hac habitasse platea dictumst vestibulum rhoncus est pellentesque. Sed vulputate odio ut enim. Et malesuada fames ac turpis egestas integer eget. Est sit amet facilisis magna etiam tempor. Massa massa ultricies mi quis hendrerit dolor magna eget est. Donec et odio pellentesque diam. Nec feugiat nisl pretium fusce id.
+                        We recognize that social media addiction is a very real issue among today's youth. However, no steps are taken to curb these addictions as it is a painful and unrewarding process. We set out to fix this by turning the act of quitting social media into a fun group activity with a touch of monetary incentives. 😉
                     </Typography>
                 </Box>
             </Box>

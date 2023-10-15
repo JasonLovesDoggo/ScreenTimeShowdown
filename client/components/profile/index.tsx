@@ -9,7 +9,7 @@ import { Session, SessionContext } from "../../util/session";
 import Routes from "../../util/routes/routes";
 import { ShowdownLayout } from "../layout/showdown";
 import { TransactionCard } from "./transaction";
-import { Transaction } from "../../util/models";
+import { Transaction, User } from "../../util/models";
 
 export const Payouts = (): JSX.Element => {
     const nav: NavigateFunction = useNavigate();
@@ -22,8 +22,12 @@ export const Payouts = (): JSX.Element => {
     return !!session.user.transactions ? (
         <ShowdownLayout>
             <div style={{ display: "flex", flexDirection: "column", padding: "2em", gap: "1em", alignItems: "flex-start" }}>
-                <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", marginBottom: "0.8em" }}>
+                <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", marginBottom: "0.8em", width: "100%" }}>
                     <Typography variant="h3">User Profile</Typography>
+                    <Button variant="outlined" onClick={(ev) => {
+                        ev.preventDefault();
+                        window.location.replace('');
+                    }}>Login with Instagram OAuth</Button>
                 </div>
 
                 <Box sx={{ backgroundColor: "lightgray", padding: "1em", borderRadius: "12px", display: "flex", flexDirection: "column", gap: "0.5em", alignItems: "flex-start" }}>
@@ -53,8 +57,9 @@ export const Payouts = (): JSX.Element => {
                                 amount: 5
                             }).then((res) => {
                                 session.notify('Successfully added $5 to your balance!', 'success');
-                                axios.get(`${Routes.BASEURL}/api/account/info`).then((res) => {
-                                    session.setUser(res.data);
+                                axios.get(`${Routes.BASEURL}/api/account/info`).then((res2: { data: User }) => {
+                                    session.setUser(res2.data);
+                                    window.location.href = (res.data.redirect);
                                 }).catch((err) => {
                                     session.notify("Error fetching user.", 'error');
                                     console.log("Error fetching user:", err);
@@ -63,7 +68,7 @@ export const Payouts = (): JSX.Element => {
                                 session.notify('Error occurred in topping up balance', 'error');
                                 console.log("Error topping up:", err);
                             });
-                        }}>Add $5</Button>
+                        }}>Top-Up $5</Button>
                     </Box>
                 </Box>
                 <Box sx={{ backgroundColor: "lightgray", padding: "1em", borderRadius: "12px", display: "flex", flexDirection: "column", gap: "0.5em", alignItems: "flex-start" }}>
