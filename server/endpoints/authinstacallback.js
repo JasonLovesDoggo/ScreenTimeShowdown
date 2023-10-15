@@ -13,7 +13,7 @@ module.exports.execute = async function (req, res) {
     };
 
 // Configure the request
-    res = post('https://api.instagram.com/oauth/access_token', data)
+    post('https://api.instagram.com/oauth/access_token', data)
         .then(function (response) { // handle success
             console.log(JSON.parse(response.data));
         })
