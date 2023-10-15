@@ -14,42 +14,53 @@ module.exports.handleloss = async (uid) => {
             }
         });
         let transactionlist = [];
-        user.groups.forEach(group => {
-            const updatedlist = group.surviving.replace((uid + ','), '');
+        for (let i = 0; i < user.groups.length; i++) {
+            const updatedlist = user.groups[i].surviving.replace((uid + ','), '');
             const logid = nanoid(16);
-            day = Date.now() - parseInt(group.startdate);
-            let title = "";
-            let message = "";
-            if (updatedlist.split(',').length === 1) {
-                message = generate(user.username, {}, day, 4, 200);
-                title = `${user.username} has won the challenge`;
+            let day = (Date.now() - parseInt(user.groups[i].startdate)) / (1000 * 60 * 60 * 24);
+            if (updatedlist.split(',').length === 2) {
+                const winnerlogid = nanoid(16);
+                const winnerid = updatedlist.replace(',', '');
+                const winner = await prisma.user.findUnique({
+                    where: {
+                        id: winnerid
+                    }
+                });
+                const message = await generate(winner.username, {}, day, 4, 200);
                 transactionlist.push(prisma.user.update({
                     where: {
-                        id: user.id
+                        id: winner.id
                     },
                     data: {
                         money: {
-                            increment: group.pot
+                            increment: user.groups[i].pot
                         }
                     }
                 }));
                 transactionlist.push(prisma.group.update({
                     where: {
-                        id: group.id
+                        id: user.groups[i].id
                     },
                     data: {
                         pot: 0,
                         startdate: '0',
                         enddate: '0'
                     }
-                }))
-            } else {
-                message = generate(user.username, {}, day, 1, 200);
-                title = `${user.username} has lost the challenge`;
+                }));
+                transactionlist.push(prisma.groupLog.create({
+                    data: {
+                        id: winnerlogid,
+                        title: `${winner.username} has won the challenge`,
+                        timestamp: `${Date.now()}`,
+                        content: message,
+                        groupid: user.groups[i].id,
+                    }
+                }));
             }
+            const message = await generate(user.username, {}, day, 1, 200);
             transactionlist.push(prisma.group.update({
                 where: {
-                    id: group.id
+                    id: user.groups[i].id
                 },
                 data: {
                     surviving: updatedlist
@@ -58,13 +69,13 @@ module.exports.handleloss = async (uid) => {
             transactionlist.push(prisma.groupLog.create({
                 data: {
                     id: logid,
-                    title: title,
+                    title: `${user.username} has lost the challenge`,
                     timestamp: `${Date.now()}`,
                     content: message,
-                    groupid: group.id,
+                    groupid: user.groups[i].id,
                 }
             }));
-        });
+        }
         await prisma.$transaction(transactionlist);
     } catch (err) {
         console.log(err);
