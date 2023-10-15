@@ -15,9 +15,9 @@ module.exports.handleloss = async (uid) => {
         });
         let transactionlist = [];
         for (let i = 0; i < user.groups.length; i++) {
-            const updatedlist = group[i].surviving.replace((uid + ','), '');
+            const updatedlist = user.groups[i].surviving.replace((uid + ','), '');
             const logid = nanoid(16);
-            let day = (Date.now() - parseInt(group[i].startdate)) / (1000 * 60 * 60 * 24);
+            let day = (Date.now() - parseInt(user.groups[i].startdate)) / (1000 * 60 * 60 * 24);
             if (updatedlist.split(',').length === 2) {
                 const winnerlogid = nanoid(16);
                 const winnerid = updatedlist.replace(',', '');
@@ -33,13 +33,13 @@ module.exports.handleloss = async (uid) => {
                     },
                     data: {
                         money: {
-                            increment: group[i].pot
+                            increment: user.groups[i].pot
                         }
                     }
                 }));
                 transactionlist.push(prisma.group.update({
                     where: {
-                        id: group[i].id
+                        id: user.groups[i].id
                     },
                     data: {
                         pot: 0,
@@ -53,14 +53,14 @@ module.exports.handleloss = async (uid) => {
                         title: `${winner.username} has won the challenge`,
                         timestamp: `${Date.now()}`,
                         content: message,
-                        groupid: group[i].id,
+                        groupid: user.groups[i].id,
                     }
                 }));
             }
             const message = await generate(user.username, {}, day, 1, 200);
             transactionlist.push(prisma.group.update({
                 where: {
-                    id: group[i].id
+                    id: user.groups[i].id
                 },
                 data: {
                     surviving: updatedlist
@@ -72,7 +72,7 @@ module.exports.handleloss = async (uid) => {
                     title: `${user.username} has lost the challenge`,
                     timestamp: `${Date.now()}`,
                     content: message,
-                    groupid: group[i].id,
+                    groupid: user.groups[i].id,
                 }
             }));
         }
