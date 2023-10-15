@@ -33,8 +33,14 @@ export const JoinParty = (): JSX.Element => {
                             axios.post(`${Routes.BASEURL}/api/invite/accept`, {
                                 id: partyID
                             }).then((res) => {
-                                session.notify(`Successfully joined party ${partyID}!`, 'success');
-                                nav('/party');
+                                axios.get(`${Routes.BASEURL}/api/account/info`).then((res) => {
+                                    session.setUser(res.data);
+                                    session.notify(`Successfully joined party ${partyID}!`, 'success');
+                                    nav('/party');
+                                }).catch((err) => {
+                                    session.notify("Error fetching user.", 'error');
+                                    console.log("Error fetching user:", err);
+                                });
                             }).catch((err) => {
                                 session.notify('Error accepting invite', 'error');
                             });
