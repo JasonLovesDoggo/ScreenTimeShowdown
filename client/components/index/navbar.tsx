@@ -31,7 +31,7 @@ export default function ButtonAppBar() {
                         sx={{ mr: 1.5, ml: 1.5, paddingBottom: "15px" }}
                     >
                         <Link to="/" style={{ textDecoration: "none", color: "white" }}>
-                            <PhonelinkLockIcon fontSize='large' />
+                            <img src="/static/img/logo-1.png" width="30px" />
                         </Link>
                     </IconButton>
 

@@ -15,7 +15,6 @@ export const TransactionCard = ({ transaction }: { transaction: Transaction }): 
             <Typography variant="body1">Amount: ${transaction.amount}</Typography>
             <Typography variant="body1">Paybilt ID: {transaction.paybiltid}</Typography>
             <Typography variant="body1">Status: {transaction.status}</Typography>
-            {/* <Typography variant="body1">Date: 2023-10-14 15:33:00</Typography> */}
         </Box>
     );
 }

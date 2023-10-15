@@ -96,13 +96,6 @@ export const Party = (): JSX.Element => {
                             });
                         }}>Create a new party</Button>
                     </>}
-                {/* <PartyMemberCard name="Foo Bar" />
-                    <PartyMemberCard name="Foo Bar" />
-                    <PartyMemberCard name="Foo Bar" />
-                    <PartyMemberCard name="Foo Bar" />
-                    <PartyMemberCard name="Foo Bar" />
-                    <PartyMemberCard name="Foo Bar" />
-                    <PartyMemberCard name="Foo Bar" /> */}
             </div>
         </ShowdownLayout>
     ) : <></>;

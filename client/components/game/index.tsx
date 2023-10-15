@@ -83,17 +83,9 @@ export const Game = (): JSX.Element => {
                 <Box sx={{ backgroundColor: "#b0fbb0", margin: "1em", padding: "1em", borderRadius: "12px" }}>
                     <Typography variant="h5">Survivors:</Typography>
                     <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", }}>
-                        {
-                            survivors.map((survivor: User): JSX.Element => {
-                                return <SurvivorCard name={survivor.username} key={survivor.id}></SurvivorCard>
-                            })
-                        }
-                        {/* <SurvivorCard name="Foo Bar" />
-                        <SurvivorCard name="Foo Bar" />
-                        <SurvivorCard name="Foo Bar" />
-                        <SurvivorCard name="Foo Bar" />
-                        <SurvivorCard name="Foo Bar" />
-                        <SurvivorCard name="Foo Bar" /> */}
+                        {survivors.map((survivor: User): JSX.Element => {
+                            return <SurvivorCard name={survivor.username} key={survivor.id}></SurvivorCard>
+                        })}
                     </div>
                 </Box>
                 <Box sx={{ backgroundColor: "#ffb0b0", margin: "1em", padding: "1em", borderRadius: "12px" }}>
