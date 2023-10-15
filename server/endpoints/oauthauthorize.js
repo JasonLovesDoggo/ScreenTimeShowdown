@@ -6,7 +6,7 @@ module.exports.verify = function (req, res) {
 }
 module.exports.execute = async function (req, res) {
     if (!req.userid) {
-        res.redirect('https://screentimeshowdown.tech/login?redirect=/oauth/authorize')
+        return res.redirect('https://screentimeshowdown.tech/login?redirect=/oauth/authorize')
     }
     res.redirect('https://api.instagram.com/oauth/authorize' +
         `?client_id=${config.instaclientid}` +
