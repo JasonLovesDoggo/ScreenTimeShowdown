@@ -3,8 +3,15 @@ const prisma = new PrismaClient();
 
 module.exports.instahelper = async (uid, instaid, lastonline) => {
     try {
-        await prisma.insta.create({
-            data: {
+        await prisma.insta.upsert({
+            where: {
+                id: `${instaid}`
+            },
+            update: {
+                lastonline: `${lastonline}`,
+                userid: uid
+            },
+            create: {
                 id: `${instaid}`,
                 lastonline: `${lastonline}`,
                 userid: uid
