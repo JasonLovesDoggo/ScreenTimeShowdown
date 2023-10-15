@@ -20,7 +20,7 @@ module.exports.execute = async function (req, res) {
     post('https://api.instagram.com/oauth/access_token', dataForm)
         .then(async function (response) { // handle success
             try {
-                let access_data = JSON.parse(JSON.stringify(response.data));
+                var access_data = JSON.parse(JSON.stringify(response.data));
             } catch (e) {
                 console.log(e);
                 console.log(response.data);
