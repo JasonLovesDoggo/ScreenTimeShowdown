@@ -2,3 +2,4 @@ node_modules
 secret.js
 *.db
 *.db-journal
+*.DS_Store
