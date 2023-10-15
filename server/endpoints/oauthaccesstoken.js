@@ -1,6 +1,6 @@
 const {post} = require("axios");
 const {instaclientid, instaclientsecret, instaredirect} = require("../config");
-const {instahelper} = require("../lib/instahelper");
+const {instahelper, getuser} = require("../lib/instahelper");
 module.exports.name = "/oauth/instagram/callback";
 module.exports.method = "GET";
 module.exports.verify = function (req, res) {
@@ -30,8 +30,7 @@ module.exports.execute = async function (req, res) {
             }
             console.log(access_data);
             let timestamp = new Date().getTime();
-            await instahelper(req.userid, access_data.user_id, timestamp);
-            //res.redirect(`https://screentimeshowdown.tech/instagram?access_token=${access_data.access_token}&user_id=${access_data.user.id}`);
+            await instahelper(await getuser(access_data.user_id), access_data.user_id, timestamp);
             res.redirect(`https://screentimeshowdown.tech/`);
 
         })
