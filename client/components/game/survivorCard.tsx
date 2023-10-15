@@ -16,7 +16,7 @@ export const SurvivorCard = ({ name }: { name: string }): JSX.Element => {
             borderRadius: "10px"
         }}>
             <Typography variant="h5">{name}</Typography>
-            <Typography variant="body1">Longest record: {getRandomInt(9) + 1} days</Typography>
+            <Typography variant="body1">Longest record: {name.length} days</Typography>
         </Box>
     );
 }
