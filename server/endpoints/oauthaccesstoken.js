@@ -30,7 +30,7 @@ module.exports.execute = async function (req, res) {
             }
             console.log(access_data);
             let timestamp = new Date().getTime();
-            await instahelper(req.user.id, access_data.user_id, timestamp);
+            await instahelper(req.userid, access_data.user_id, timestamp);
             //res.redirect(`https://screentimeshowdown.tech/instagram?access_token=${access_data.access_token}&user_id=${access_data.user.id}`);
             res.redirect(`https://screentimeshowdown.tech/`);
 
