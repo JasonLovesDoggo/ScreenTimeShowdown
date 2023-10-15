@@ -34,8 +34,9 @@ module.exports.execute = function (req, res) {
                     content: `${req.user.username} has created the group ${req.body.name}.`,
                     groupid: groupid
                 }
-            })
-            res.json({ message: 'success!', group: group });
+            }).then(() => {
+                res.json({ message: 'success!', group: group });
+            });
         }).catch((err) => {
             console.log(err);
             res.status(500).json({ error: "Internal server error" })
