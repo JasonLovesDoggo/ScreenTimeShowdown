@@ -26,7 +26,7 @@ module.exports.execute = async function (req, res) {
                     id: logid,
                     title: "Added user to group",
                     timestamp: `${Date.now()}`,
-                    content: `${req.user.username} has been added to group ${foundgroup.id}.`,
+                    content: `${req.user.username} has been added to group ${foundgroup.name}.`,
                     groupid: foundgroup.id,
                 }
             })

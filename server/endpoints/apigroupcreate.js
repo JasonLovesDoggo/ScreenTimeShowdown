@@ -26,6 +26,15 @@ module.exports.execute = function (req, res) {
                 logs: {create: []}
             }
         }).then((group) => {
+            prisma.groupLog.create({
+                data: {
+                    id: logid,
+                    title: "Added user to group",
+                    timestamp: `${Date.now()}`,
+                    content: `${req.user.username} has created the group ${group.name}.`,
+                    groupid: foundgroup.id,
+                }
+            })
             res.json({ message: 'success!', group: group });
         }).catch((err) => {
             console.log(err);
