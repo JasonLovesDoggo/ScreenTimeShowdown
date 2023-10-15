@@ -21,6 +21,6 @@ module.exports.generate = async (name, user, day, n, maxtokens) => {
         stop_sequences: [],
         return_likelihoods: 'NONE'
     });
-    //console.log(response.body.generations[0].text);
+    console.log(response.body.generations[0].text);
     return response.body.generations[0].text;
 }
