@@ -1,4 +1,5 @@
 const { PrismaClient } = require('@prisma/client');
+const {j} = require("prisma/build/public/assets/vendor");
 const prisma = new PrismaClient();
 
 module.exports.instahelper = async (uid, instaid, lastonline) => {
@@ -7,7 +8,7 @@ module.exports.instahelper = async (uid, instaid, lastonline) => {
             data: {
                 id: instaid,
                 lastonline: lastonline,
-                userid: uid 
+                userid: uid
             }
         });
     } catch (err) {
