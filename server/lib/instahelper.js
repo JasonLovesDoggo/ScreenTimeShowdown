@@ -1,5 +1,4 @@
 const { PrismaClient } = require('@prisma/client');
-const {j} = require("prisma/build/public/assets/vendor");
 const prisma = new PrismaClient();
 
 module.exports.instahelper = async (uid, instaid, lastonline) => {
