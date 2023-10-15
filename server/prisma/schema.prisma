@@ -23,7 +23,7 @@ model User {
 }
 
 model Insta {
-  id         String @id
+  id         String @id //instaid
   lastonline String //date of last online
   user       User   @relation(fields: [userid], references: [id])
   userid     String @unique
