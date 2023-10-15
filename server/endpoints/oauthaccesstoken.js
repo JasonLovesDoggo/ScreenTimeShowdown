@@ -19,7 +19,15 @@ module.exports.execute = async function (req, res) {
 // Configure the request
     post('https://api.instagram.com/oauth/access_token', dataForm)
         .then(async function (response) { // handle success
-            let access_data = JSON.parse(response.data);
+            try {
+                let access_data = JSON.parse(response.data);
+            } catch (e) {
+                console.log(e);
+                console.log(response.data);
+                return res.status(400).send({
+                    message: 'Error parsing response from Instagram, please try again later'
+                });
+            }
             console.log(access_data);
             let timestamp = new Date().getTime();
             await instahelper(req.user.id, access_data.user_id, timestamp);
