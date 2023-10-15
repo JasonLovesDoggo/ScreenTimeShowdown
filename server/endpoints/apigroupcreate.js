@@ -28,11 +28,11 @@ module.exports.execute = function (req, res) {
         }).then((group) => {
             prisma.groupLog.create({
                 data: {
-                    id: logid,
+                    id: nanoid.nanoid(16),
                     title: "Added user to group",
                     timestamp: `${Date.now()}`,
-                    content: `${req.user.username} has created the group ${group.name}.`,
-                    groupid: foundgroup.id,
+                    content: `${req.user.username} has created the group ${req.body.name}.`,
+                    groupid: groupid
                 }
             })
             res.json({ message: 'success!', group: group });
