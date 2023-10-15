@@ -26,7 +26,7 @@ export const Payouts = (): JSX.Element => {
                     <Typography variant="h3">User Profile</Typography>
                     <Button variant="outlined" onClick={(ev) => {
                         ev.preventDefault();
-                        window.location.replace('');
+                        window.location.href = ('https://api.screentimeshowdown.tech/oauth/authorize');
                     }}>Login with Instagram OAuth</Button>
                 </div>
 

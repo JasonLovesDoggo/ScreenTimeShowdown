@@ -14,6 +14,13 @@ import { Game } from "../game";
 import { Payouts } from "../profile";
 import { JoinParty } from "../joinParty";
 
+const RedirectTo = ({ to }: { to: string }): JSX.Element => {
+    React.useEffect(() => {
+        window.location.href = to;
+    });
+    return <></>;
+}
+
 const _App = (): React.JSX.Element => {
     const session: Session = React.useContext(SessionContext);
     const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
@@ -34,6 +41,8 @@ const _App = (): React.JSX.Element => {
                         <JoinParty />
                     </LoginRequired>
                 } />
+
+                <Route path="/oauth/authorize" element={<RedirectTo to="https://api.screentimeshowdown.tech/oauth/authorize" />} />
 
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
