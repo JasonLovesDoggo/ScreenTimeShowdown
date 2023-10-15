@@ -1,6 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const { generate } = require('./generate');
 const prisma = new PrismaClient();
+const { nanoid } = require('nanoid');
 
 module.exports.handleloss = async (uid) => {
     try {
@@ -13,60 +14,31 @@ module.exports.handleloss = async (uid) => {
             }
         });
         let transactionlist = [];
-        user.groups.forEach(async group => {
-            const list = group.surviving;
-            const users = list.split(',');
-            if (users.length <= 2) {
-                const updatedlist = group.surviving.replace((uid + ','), '');
-                const winnerid = updatedlist.replace(',', '');
-                const winner = await prisma.user.findUnique({
-                    where: {
-                        id: winnerid
-                    }
-                })
-                await prisma.user.update({
-                    where: {
-                        id: winnerid
-                    },
-                    data: {
-                        money: {
-                            increment: group.pot
-                        }
-                    }
-                })
-                await prisma.group.update({
-                    where: {
-                        id: group.id
-                    },
-                    data: {
-                        pot: 0,
-                        startdate: '0',
-                        enddate: '0',
-                        logs: {
-                            create: `${req.user.username} is the last one standing`
-                        }
-                    }
-                })
-                return await generate(winner.name, winnerid, day, 4, );
-
-                // Set start and end date to 0
-                // Call AI generation function
-                // 
-            } else {
-                const updatedlist = group.surviving.replace((uid + ','), '');
-                transactionlist.push(prisma.group.update({
-                    where: {
-                        id: group.id
-                    },
-                    data: {
-                        surviving: updatedlist
-                    }
-                }));
-            }
+        user.groups.forEach(group => {
+            const updatedlist = group.surviving.replace((uid + ','), '');
+            const logid = nanoid(16);
+            day = Date.now() - parseInt(group.startdate);
+            const message = generate(user.username, {}, day, 1, 200);
+            transactionlist.push(prisma.group.update({
+                where: {
+                    id: group.id
+                },
+                data: {
+                    surviving: updatedlist
+                }
+            }));
+            transactionlist.push(prisma.groupLog.create({
+                data: {
+                    id: logid,
+                    title: `${user.username} lost the challenge`,
+                    timestamp: `${Date.now()}`,
+                    content: message,
+                    groupid: group.id,
+                }
+            }))
         });
         await prisma.$transaction(transactionlist);
     } catch (err) {
         console.log(err);
     }
-
 }
