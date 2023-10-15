@@ -6,10 +6,9 @@ module.exports.verify = function (req, res) {
     return true;
 }
 module.exports.execute = async function (req, res) {
-    let code = req.query.code;
-    console.log(code);
-
     let dataForm = new FormData();
+
+    let code = req.query.code;
     dataForm.append('client_id', instaclientid);
     dataForm.append('client_secret', instaclientsecret);
     dataForm.append('grant_type', 'authorization_code');
@@ -19,7 +18,7 @@ module.exports.execute = async function (req, res) {
 // Configure the request
     post('https://api.instagram.com/oauth/access_token', dataForm)//todo the data param might be the issue\???
         .then(function (response) { // handle success
-            console.log(JSON.parse(response.data));
+            console.log(response.data)
         })
         .catch(function (response) { // handle error
             console.log(response);
