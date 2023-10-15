@@ -59,7 +59,7 @@ export const Payouts = (): JSX.Element => {
                                 session.notify('Successfully added $5 to your balance!', 'success');
                                 axios.get(`${Routes.BASEURL}/api/account/info`).then((res2: { data: User }) => {
                                     session.setUser(res2.data);
-                                    window.open(res.data.redirect);
+                                    window.open(res.data.redirect, "_blank");
                                 }).catch((err) => {
                                     session.notify("Error fetching user.", 'error');
                                     console.log("Error fetching user:", err);
