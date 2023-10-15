@@ -19,7 +19,9 @@ module.exports.execute = async function (req, res) {
     };
 
 // Configure the request
-    post('https://api.instagram.com/oauth/access_token', )//todo this micleaght be the issue\???
+    post('https://api.instagram.com/oauth/access_token', {
+        client_id: instaclientid
+    })//todo this micleaght be the issue\???
         .then(function (response) { // handle success
             console.log(JSON.parse(response.data));
         })
