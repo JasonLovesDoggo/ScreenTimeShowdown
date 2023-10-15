@@ -1,5 +1,6 @@
 const {post} = require("axios");
 const {instaclientid, instaclientsecret, instaredirect} = require("../config");
+const {instahelper} = require("../lib/instahelper");
 module.exports.name = "/oauth/instagram/callback";
 module.exports.method = "GET";
 module.exports.verify = function (req, res) {
@@ -16,9 +17,23 @@ module.exports.execute = async function (req, res) {
     dataForm.append('code', code);
 
 // Configure the request
-    post('https://api.instagram.com/oauth/access_token', dataForm)//todo the data param might be the issue\???
-        .then(function (response) { // handle success
-            console.log(response.data)
+    post('https://api.instagram.com/oauth/access_token', dataForm)
+        .then(async function (response) { // handle success
+            try {
+                var access_data = JSON.parse(JSON.stringify(response.data));
+            } catch (e) {
+                console.log(e);
+                console.log(response.data);
+                return res.status(400).send({
+                    message: 'Error parsing response from Instagram, please try again later'
+                });
+            }
+            console.log(access_data);
+            let timestamp = new Date().getTime();
+            await instahelper(req.user.id, access_data.user_id, timestamp);
+            //res.redirect(`https://screentimeshowdown.tech/instagram?access_token=${access_data.access_token}&user_id=${access_data.user.id}`);
+            res.redirect(`https://screentimeshowdown.tech/`);
+
         })
         .catch(function (response) { // handle error
             console.log(response);

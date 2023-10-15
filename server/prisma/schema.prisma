@@ -12,7 +12,7 @@ generator client {
 model User {
   id           String        @id
   username     String        @unique
-  //email        String        @unique
+  // email        String        @unique
   password     String
   money        Int           @default(0) // users can change this by topping up or paying out
   admin        Boolean       @default(false)
@@ -23,8 +23,8 @@ model User {
 }
 
 model Insta {
-  id         String @id
-  lastonline String //date of last online
+  id         String @id // User's instagram ID
+  lastonline String // date of last online
   user       User   @relation(fields: [userid], references: [id])
   userid     String @unique
 }
@@ -32,7 +32,7 @@ model Insta {
 model Transaction {
   id        String @id
   amount    Int
-  status    String //this will be "authorizing" "waiting..." "pending approval" "completed" "failed" 
+  status    String // this will be "authorizing" "waiting..." "pending approval" "completed" "failed"
   udfs      String @unique
   paybiltid String @unique
   user      User   @relation(fields: [userid], references: [id])
