@@ -18,7 +18,8 @@ module.exports.handleloss = async (uid) => {
             const updatedlist = user.groups[i].surviving.replace((uid + ','), '');
             const logid = nanoid(16);
             let day = (Date.now() - parseInt(user.groups[i].startdate)) / (1000 * 60 * 60 * 24);
-            console.log(day);
+            console.log(day); // todo
+            console.log(Dat)
             let winner = false;
             if (updatedlist.split(',').length === 2) {
                 winner = true;

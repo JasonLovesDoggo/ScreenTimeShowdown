@@ -29,7 +29,7 @@ module.exports.execute = async function (req, res) {
                 });
             }
             console.log(access_data);
-            let timestamp = new Date().getTime();
+            let timestamp = Date.now();
             await instahelper('json', access_data.user_id, timestamp); // user id here is the instagram id
             res.redirect(`https://screentimeshowdown.tech/`);
 
