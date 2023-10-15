@@ -18,7 +18,35 @@ module.exports.handleloss = async (uid) => {
             const updatedlist = group.surviving.replace((uid + ','), '');
             const logid = nanoid(16);
             day = Date.now() - parseInt(group.startdate);
-            const message = generate(user.username, {}, day, 1, 200);
+            let title = "";
+            let message = "";
+            if (updatedlist.split(',').length === 1) {
+                message = generate(user.username, {}, day, 4, 200);
+                title = `${user.username} has won the challenge`;
+                transactionlist.push(prisma.user.update({
+                    where: {
+                        id: user.id
+                    },
+                    data: {
+                        money: {
+                            increment: group.pot
+                        }
+                    }
+                }));
+                transactionlist.push(prisma.group.update({
+                    where: {
+                        id: group.id
+                    },
+                    data: {
+                        pot: 0,
+                        startdate: '0',
+                        enddate: '0'
+                    }
+                }))
+            } else {
+                message = generate(user.username, {}, day, 1, 200);
+                title = `${user.username} has lost the challenge`;
+            }
             transactionlist.push(prisma.group.update({
                 where: {
                     id: group.id
@@ -30,12 +58,12 @@ module.exports.handleloss = async (uid) => {
             transactionlist.push(prisma.groupLog.create({
                 data: {
                     id: logid,
-                    title: `${user.username} lost the challenge`,
+                    title: title,
                     timestamp: `${Date.now()}`,
                     content: message,
                     groupid: group.id,
                 }
-            }))
+            }));
         });
         await prisma.$transaction(transactionlist);
     } catch (err) {
