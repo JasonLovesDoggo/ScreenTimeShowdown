@@ -9,11 +9,11 @@ module.exports.execute = async function (req, res) {
     let code = req.query.code;
     console.log(code);
 
-    let data = {'client_id' : instaclientid,
-        'client_secret' : instaclientsecret,
-        'grant_type' : 'authorization_code',
-        'redirect_uri' : instaredirect,
-        'code' : code,
+    let data = {client_id : instaclientid,
+        client_secret : instaclientsecret,
+        grant_type : 'authorization_code',
+        redirect_uri : instaredirect,
+        code : code,
     };
 
 // Configure the request
